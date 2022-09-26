@@ -1,0 +1,123 @@
+<template>
+    <template if:true={_showGridPagination}>
+        <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread">
+            <div class="slds-col">
+                <div style={_controlPagination} class="slds-list_inline slds-p-bottom_xx-small customSelect">
+                    <label class="slds-text-color_weak slds-p-horizontal_x-small" for="recordsPerPage">Records per page:</label>
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="recordsPerPage" onchange={handleRecordsPerPage}>
+                            <template for:each={_pageSizeOptions} for:item="option">
+                                <option key={option} value={option}>{option}</option>
+                            </template>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col">
+                <div if:true={_showSearchBox}>
+                    <div class="slds-p-horizontal_x-small slds-p-bottom_xx-small">
+                        <lightning-input
+                            label=""
+                            type="search"
+                            placeholder="Search text"
+                            variant="label-hidden"
+                            onchange={handleKeyChange}
+                        ></lightning-input>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col">
+                <div style={_controlPagination}>
+                    <div class="slds-col slds-p-bottom_xx-small">
+                        <span style={_controlPrevious}>
+                            <lightning-button-icon
+                                icon-name="utility:left"
+                                variant="bare"
+                                size="medium"
+                                alternative-text="Previous Page"
+                                onclick={handlePreviousPage}
+                            ></lightning-button-icon>
+                        </span>
+                        <label class="slds-text-color_weak slds-p-horizontal_x-small" for="pageNum">Page:</label>
+                        <input
+                            type="number"
+                            id="pageNum"
+                            value={_pageNumber}
+                            maxlength="4"
+                            onkeypress={handlePageNumberChange}
+                            class="customInput"
+                            title="Go to a Page"
+                        />
+                        <span>&nbsp;of&nbsp;<b id="totalPages">{_totalPages}</b></span>
+                        <span style={_controlNext}>
+                            <lightning-button-icon
+                                icon-name="utility:right"
+                                variant="bare"
+                                size="medium"
+                                alternative-text="Next Page"
+                                onclick={handleNextPage}
+                                class="slds-p-horizontal_x-small"
+                            ></lightning-button-icon>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template if:true={_showGridView}>
+        <lightning-datatable
+            key-field="uid"
+            data={_recordsToDisplay}
+            columns={_columns}
+            show-row-number-column={_showRowNumberColumn}
+            hide-checkbox-column={_hideCheckboxColumn}
+            onrowaction={handleRowAction}
+            default-sort-direction={_defaultSortDirection}
+            sorted-direction={_sortDirection}
+            sorted-by={handleSortedBy}
+            onsort={handleGridSort}
+            wrap-text-max-lines={_maxLinesToWrap}
+            selected-rows={_currentSelectedRows}
+            oncellchange={handleCellChange}
+            onrowselection={handleRowSelection}
+            onsave={handleSave}
+            draft-values={draftValues}>
+        </lightning-datatable>
+    </template>
+    <template if:true={_showGridSummary}>
+        <div class="slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-p-right_xx-large slds-m-horizontal_none">
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="6">
+                    <div class="slds-text-align_right">
+                        <label class="slds-form-element__label slds-text-title_bold"> Sub Total :</label>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <div class="slds-text-align_right slds-p-right_x-small">
+                        <lightning-formatted-number value={_subTotal} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <div class="slds-text-align_right">
+                        <label class="slds-form-element__label slds-text-title_bold"> Discount : </label>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <div class="slds-text-align_right slds-p-right_x-small">
+                        <lightning-formatted-number value={_discount} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <div class="slds-text-align_right">
+                        <label class="slds-form-element__label slds-text-title_bold"> Total Amount :</label>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <div class="slds-text-align_right slds-p-right_x-small">
+                        <lightning-formatted-number value={_total} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </template>
+</template>

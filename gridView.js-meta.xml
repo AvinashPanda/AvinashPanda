@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <description>Grid View</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Grid View</masterLabel>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__UtilityBar</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="columns" type="String" />
+            <property name="records" type="String" />
+            <property name="enableEditAction" type="Boolean" />
+            <property name="enableDeleteAction" type="Boolean" />
+            <property name="disableCheckboxColumn" type="Boolean" />
+            <property name="enableSearchBox" type="Boolean" />
+            <property name="enableRowNumberColumn" type="Boolean" />
+            <property name="enableGridPagination" type="Boolean" />
+            <property name="enableGridSummary" type="Boolean" />
+            <property name="preSelectedRows" type="String" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
